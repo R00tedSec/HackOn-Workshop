@@ -1,0 +1,1 @@
+Create ansible scripts to harden -> mariadb, ssh , and general linux users
