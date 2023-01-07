@@ -13,29 +13,30 @@
 #
     InsertSection "Apache"
 
-    # # Test        : APACHE-000
-    # # Description : Check if Postgresql is being used
-    # Register --test-no DBS-1804 --weight L --network NO --category security --description "Checking active MySQL process"
-    # if [ ${SKIPTEST} -eq 0 ]; then
-    #     FIND=$(${PSBINARY} ax | ${EGREPBINARY} "mariadb|mysqld|mysqld_safe" | ${GREPBINARY} -v "grep")
-    #     if [ -z "${FIND}" ]; then
-    #         if [ ${DEBUG} -eq 1 ]; then Display --indent 2 --text "- MySQL process status" --result "${STATUS_NOT_FOUND}" --color WHITE --debug; fi
-    #         LogText "Result: MySQL process not active"
-    #     else
-    #         Display --indent 2 --text "- P process status" --result "${STATUS_FOUND}" --color GREEN
-    #          LogText "Result: MySQL is active"
-    #          MYSQL_RUNNING=1
-    #          DATABASE_ENGINE_RUNNING=1
-    #          Report "mysql_running=${MYSQL_RUNNING}"
-    #     fi
-    # fi
+    # Test        : APACHE-000
+    # Description : Check if Postgresql is being used
+    Register --test-no DBS-1804 --weight L --network NO --category security --description "Checking active Apache process"
+    if [ ${SKIPTEST} -eq 0 ]; then
+        FIND=$(${PSBINARY} ax | ${EGREPBINARY} "apache" | ${GREPBINARY} -v "grep")
+        if [ -z "${FIND}" ]; then
+            Display --indent 2 --text "- Apache process status" --result "${STATUS_NOT_FOUND}" --color GREEN 
+            LogText "Result: Apache process not active"
+        else
+            Display --indent 2 --text "- Apache process status" --result "${STATUS_FOUND}" --color GREEN
+             LogText "Result: Apache is active"
+             APACHE_RUNNING=1
+             DATABASE_ENGINE_RUNNING=1
+             Report "Apache_running=${APACHE_RUNNING}"
+        fi
+    fi
 #
 #################################################################################
 #
     # Test        : APACHE-XXXX
-    # Description : Check data directory permissions
-    
-    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking MySQL data directory permissions"
+    # Description : Ensure the Apache Web Server Runs As a Non-Root user and group
+    # Reference   : https://www.tenable.com/audits/items/CIS_Apache_HTTP_Server_2.2_Benchmark_v3.6.0_Level_1_Middleware.audit:da4527cf054249af376de28646549e1b
+
+    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking Apache data directory permissions"
     if [ ${SKIPTEST} -eq 0 ]; then
         Display --indent 2 --text "- XXXX" --result "PENDING" --color GREEN    
     fi
@@ -43,9 +44,10 @@
 #################################################################################
 #
     # Test        : APACHE-XXXX
-    # Description : Check data directory permissions
-    
-    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking MySQL data directory permissions"
+    # Description : Ensure Weak SSL Protocols Are Disabled (SSLv2, SSLv3 and TLSv1)
+    # Reference   : https://www.tenable.com/audits/items/CIS_Apache_HTTP_Server_2.2_Benchmark_v3.6.0_Level_1.audit:2c18b98397ec1e28989b6e6a4e12db2e
+
+    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking Apache data directory permissions"
     if [ ${SKIPTEST} -eq 0 ]; then
             Display --indent 2 --text "- XXXX" --result "PENDING" --color GREEN
     fi
@@ -53,8 +55,9 @@
 #################################################################################
 #
     # Test        : APACHE-XXXX
-    # Description : Check data directory permissions
-    
+    # Description : Ensure SSL Compression is Not Enabled
+    # Reference   : https://www.tenable.com/audits/items/CIS_Apache_HTTP_Server_2.2_Benchmark_v3.6.0_Level_1.audit:82e22b85c8b681100bd8fadf829b4ce5
+
     Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking MySQL data directory permissions"
     if [ ${SKIPTEST} -eq 0 ]; then
         Display --indent 2 --text "- XXXX" --result "PENDING" --color GREEN
