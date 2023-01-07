@@ -15,9 +15,16 @@
 
     # Test        : Linux-0001
     # Description : Ensure permissions on /etc/passwd are configured
+    # Reference   : https://www.tenable.com/audits/items/CIS_Distribution_Independent_Linux_Workstation_L1_v2.0.0.audit:a6fa37cc8c6fc0acb6b4d7a7c0093600
+
     Register --test-no Linux-0000 --weight L --network NO --category security --description "Ensure permissions on /etc/passwd are configured"
     if [ ${SKIPTEST} -eq 0 ]; then
-        Display --indent 2 --text "- Ensure permissions on /etc/passwd are configured" --result "PENDING" --color GREEN
+        PERMISSIONS=$(stat -c "%a" /etc/passwd)
+        if [ "$PERMISSIONS" = "644" ]; then
+            Display --indent 2 --text "- /etc/passwd permissions" --result "${STATUS_OK}" --color GREEN
+        else
+            Display --indent 2 --text "- /etc/passwd permissions" --result "${STATUS_ERROR}" --color RED
+        fi
     fi
 #
 #################################################################################
@@ -28,7 +35,12 @@
 
     Register --test-no Linux-0002 --weight L --network NO --category security --description "Ensure password expiration is 365 days or less"
     if [ ${SKIPTEST} -eq 0 ]; then
-        Display --indent 2 --text "- Ensure password expiration is 365 days or less - users" --result "PENDING" --color GREEN
+        MAX_DAYS=$(grep "^ *PASS_MAX_DAYS" /etc/login.defs | awk '{print $2}')
+        if [ $MAX_DAYS -lt "365" ];then
+            Display --indent 2 --text "- Ensure password expiration is 365 days or less" --result "${STATUS_OK}" --color GREEN
+        else
+            Display --indent 2 --text "- Ensure password expiration is 365 days or less" --result "${STATUS_ERROR}" --color RED
+        fi
     fi
 #
 #################################################################################
