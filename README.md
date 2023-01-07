@@ -18,3 +18,10 @@ La idea es que los alumnos del workshop aprendan a crear tests de hardening en l
 - Se les proporciona 3 scripts de ansible preparados para que desarrollen los pasos que modifiquen las configuraciones y solucionen los problemas de seguridad.
 - 1 maquina ubuntu 22.04 con ansible instalado
 - 1 maquina ubuntu 22.04 con ssh, apache y linux con configuraciones inseguras que deben solucionar.
+
+
+## To Do
+- Terminar de preparar los tests -> con solucion y sin solucion
+- Preparar scripts de ansible -> con solucion y sin solucion
+- Preparar diapositivas
+- Preparar maquinas virtuales.
