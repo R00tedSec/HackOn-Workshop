@@ -16,35 +16,56 @@
 
     # Test        : SSH-000
     # Description : Check if ssh is being used
-    Register --test-no DBS-1804 --weight L --network NO --category security --description "Checking active MySQL process"
+    Register --test-no DBS-1804 --weight L --network NO --category security --description "Checking active ssh daemon"
     if [ ${SKIPTEST} -eq 0 ]; then
-        # FIND=$(${PSBINARY} ax | ${EGREPBINARY} "mariadb|mysqld|mysqld_safe" | ${GREPBINARY} -v "grep")
-        # if [ -z "${FIND}" ]; then
-        #     if [ ${DEBUG} -eq 1 ]; then Display --indent 2 --text "- MySQL process status" --result "${STATUS_NOT_FOUND}" --color WHITE --debug; fi
-        #     LogText "Result: MySQL process not active"
-        # else
-        #     Display --indent 2 --text "- MySQL process status" --result "${STATUS_FOUND}" --color GREEN
-        #     LogText "Result: MySQL is active"
-        #     MYSQL_RUNNING=1
-        #     DATABASE_ENGINE_RUNNING=1
-        #     Report "mysql_running=${MYSQL_RUNNING}"
-        # fi
+        FIND=$(${PSBINARY} ax | ${EGREPBINARY} "ssh" | ${GREPBINARY} -v "grep")
+        if [ -z "${FIND}" ]; then
+            SSH_RUNNING=0
+            Display --indent 2 --text "- SSH process status" --result "${STATUS_NOT_FOUND}" --color GREEN
+            LogText "Result: SSH process not active"
+        else
+            Display --indent 2 --text "- SSH process status" --result "${STATUS_FOUND}" --color GREEN
+            LogText "Result: SSH is active"
+            SSH_RUNNING=1
+            Report "SSH_service=${SSH_RUNNING}"
+        fi
     fi
 #
 #################################################################################
 #
-    # Test        : SSH-1816
-    # Description : Check empty MySQL root password
-    # Notes       : Only perform test when MySQL is running and client is available
-    if [ -n "${MYSQLCLIENTBINARY}" -a ${MYSQL_RUNNING} -eq 1 ]; then PREQS_MET="YES"; SKIPREASON=""; else PREQS_MET="NO"; SKIPREASON="MySQL not installed, or not running"; fi
-    Register --test-no DBS-1816 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Checking MySQL root password"
+    # Test        : SSH-0001
+    # Description : Ensure SSH root login is disabled
+    # Reference   : https://www.tenable.com/audits/items/CIS_Ubuntu_22.04_LTS_v1.0.0_Server_L1.audit:13f14fcee36064a2ef722bb4d40f20d7
 
+    if [ ${SSH_RUNNING} -eq 1 ]; then PREQS_MET="YES"; SKIPREASON=""; else PREQS_MET="NO"; SKIPREASON="SSH not installed, or not running"; fi
+    Register --test-no SSH-0001 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Ensure SSH root login is disabled"
+    if [ ${SKIPTEST} -eq 0 ]; then
+        Display --indent 2 --text "- Ensure SSH root login is disabled" --result "PENDING" --color GREEN
+    fi
 
 #
 #################################################################################
 #
-    if [ ${DATABASE_ENGINE_RUNNING} -eq 0 ]; then
-        Display --indent 4 --text "No database engines found"
+    # Test        : SSH-0002
+    # Description : Ensure SSH AllowTcpForwarding is disabled
+    # Reference   : https://www.tenable.com/audits/items/CIS_Distribution_Independent_Linux_Server_L2_v2.0.0.audit:442b5a19a23bed7f8ac3fff5a9c41c01
+    
+    if [ ${SSH_RUNNING} -eq 1 ]; then PREQS_MET="YES"; SKIPREASON=""; else PREQS_MET="NO"; SKIPREASON="SSH not installed, or not running"; fi
+    Register --test-no SSH-0002 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Ensure SSH AllowTcpForwarding is disabled"
+    if [ ${SKIPTEST} -eq 0 ]; then
+        Display --indent 2 --text "- Ensure SSH AllowTcpForwarding is disabled" --result "PENDING" --color GREEN 
+    fi
+#
+#################################################################################
+#
+    # Test        : SSH-0003
+    # Description : Ensure SSH root login is disabled
+    # Reference   : https://www.tenable.com/audits/items/CIS_Distribution_Independent_Linux_Workstation_L1_v2.0.0.audit:1744a14649724f2777dfa14df0152b6d
+    
+    if [ ${SSH_RUNNING} -eq 1 ]; then PREQS_MET="YES"; SKIPREASON=""; else PREQS_MET="NO"; SKIPREASON="SSH not installed, or not running"; fi
+    Register --test-no SSH-0003 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Ensure SSH root login is disabled"
+    if [ ${SKIPTEST} -eq 0 ]; then
+        Display --indent 2 --text "- Ensure SSH root login is disabled" --result "PENDING" --color GREEN 
     fi
 #
 #################################################################################

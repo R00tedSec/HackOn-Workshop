@@ -1025,7 +1025,7 @@ ${NORMAL}
             #                mac_frameworks file_integrity tooling malware file_permissions homedirs \
             #                kernel_hardening hardening"
 
-            INCLUDE_TESTS="linux ssh postgresql"
+            INCLUDE_TESTS="linux ssh apache"
                            
         else
             INCLUDE_TESTS="${TEST_GROUP_TO_CHECK}"
