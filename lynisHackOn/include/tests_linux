@@ -49,18 +49,27 @@
     # Description : Ensure there is a firewall running and blocking all ports except 22 and 443
     Register --test-no Linux-0003 --weight L --network NO --category security --description "Ensure there is a firewall running"
     if [ ${SKIPTEST} -eq 0 ]; then
-        Display --indent 2 --text "- Firewall enabled and configured" --result "PENDING" --color GREEN
-    fi
-#
-#################################################################################
-#
-    # Test        : Linux-0004 (EXTRA)
-    # Description : Ensure address space layout randomization (ASLR) is enabled
-    # Reference   : https://www.tenable.com/audits/items/CIS_Ubuntu_18.04_LTS_Server_v2.1.0_L1.audit:46724b52bfe0a7a14abccb5ac45f9861
-
-    Register --test-no Linux-0004 --weight L --network NO --category security --description "Ensure address space layout randomization (ASLR) is enabled"
-    if [ ${SKIPTEST} -eq 0 ]; then
-        Display --indent 2 --text "- Ensure address space layout randomization (ASLR) is enabled" --result "PENDING" --color GREEN
+        FIREWALL=$(ufw)
+        if [ $? -eq 127 ];then
+            Display --indent 2 --text "- UFW not installed" --result "${STATUS_ERROR}" --color RED
+        else
+            FIREWALL_ENABLED=$(ufw status)
+            if [ "$FIREWALL_ENABLED" = "Status: inactive" ];then
+                Display --indent 2 --text "- Firewall disabled" --result "${STATUS_ERROR}" --color RED
+            else
+                FIREWALL_OPENPORTS=$(ufw status | grep ALLOW | cut -d " " -f1-2 | grep -v "v6" | uniq )
+                DISALLOWED_PORT=0
+                for i in $FIREWALL_OPENPORTS; do 
+                    if [ $i != "443" -a $i != "22" ];then
+                        Display --indent 2 --text "- Allowed $i port " --result "${STATUS_ERROR}" --color RED
+                        DISALLOWED_PORT=1
+                    fi
+                done
+                if [ $i -eq 0 ];then
+                    Display --indent 2 --text "- Firewall enabled and correctly configured" --result "${STATUS_OK}" --color GREEN
+                fi
+            fi
+        fi
     fi
 #
 #################################################################################

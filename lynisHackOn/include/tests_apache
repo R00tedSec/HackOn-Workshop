@@ -33,34 +33,34 @@
 #################################################################################
 #
     # Test        : APACHE-XXXX
-    # Description : Ensure the Apache Web Server Runs As a Non-Root user and group
+    # Description : Ensure the Apache Web Server Runs As a Non-Root user and group -> rootuser, rootuser
     # Reference   : https://www.tenable.com/audits/items/CIS_Apache_HTTP_Server_2.2_Benchmark_v3.6.0_Level_1_Middleware.audit:da4527cf054249af376de28646549e1b
 
-    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking Apache data directory permissions"
+    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking Apache Web Server Runs As a Non-Root user and group"
     if [ ${SKIPTEST} -eq 0 ]; then
-        Display --indent 2 --text "- XXXX" --result "PENDING" --color GREEN    
+        Display --indent 2 --text "- Apache Web Server Runs As a Non-Root user and group" --result "PENDING" --color GREEN    
     fi
 #
 #################################################################################
 #
     # Test        : APACHE-XXXX
-    # Description : Ensure Weak SSL Protocols Are Disabled (SSLv2, SSLv3 and TLSv1)
+    # Description : Ensure Weak SSL Protocols Are Disabled (SSLv2, SSLv3 and TLSv1) -> TLSv1
     # Reference   : https://www.tenable.com/audits/items/CIS_Apache_HTTP_Server_2.2_Benchmark_v3.6.0_Level_1.audit:2c18b98397ec1e28989b6e6a4e12db2e
 
-    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking Apache data directory permissions"
+    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking Weak SSL Protocols Are Disabled"
     if [ ${SKIPTEST} -eq 0 ]; then
-            Display --indent 2 --text "- XXXX" --result "PENDING" --color GREEN
+            Display --indent 2 --text "- Weak SSL Protocols Are Disabled" --result "PENDING" --color GREEN
     fi
 #
 #################################################################################
 #
     # Test        : APACHE-XXXX
-    # Description : Ensure SSL Compression is Not Enabled
-    # Reference   : https://www.tenable.com/audits/items/CIS_Apache_HTTP_Server_2.2_Benchmark_v3.6.0_Level_1.audit:82e22b85c8b681100bd8fadf829b4ce5
+    # Description : Ensure MaxKeepAliveRequests is Set to a Value of 100 or Greater
+    # Reference   : https://www.tenable.com/audits/items/CIS_Apache_HTTP_Server_2.4_Benchmark_v2.0.0_Level_1_Middleware.audit:0b01b5b091b62393ca48f819083ce551
 
-    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking MySQL data directory permissions"
+    Register --test-no APACHE-XXXX --weight L --network NO --category security --description "Checking MaxKeepAliveRequests for apache2 configuration"
     if [ ${SKIPTEST} -eq 0 ]; then
-        Display --indent 2 --text "- XXXX" --result "PENDING" --color GREEN
+        Display --indent 2 --text "- Ensure MaxKeepAliveRequests is Set to a Value of 100 or Greater" --result "PENDING" --color GREEN
     fi
 
 #

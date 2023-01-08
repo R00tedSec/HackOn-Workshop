@@ -41,6 +41,7 @@
     Register --test-no SSH-0001 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Ensure SSH root login is disabled"
     if [ ${SKIPTEST} -eq 0 ]; then
         Display --indent 2 --text "- Ensure SSH root login is disabled" --result "PENDING" --color GREEN
+        
     fi
 
 #
@@ -59,8 +60,8 @@
 #################################################################################
 #
     # Test        : SSH-0003
-    # Description : Ensure SSH root login is disabled
-    # Reference   : https://www.tenable.com/audits/items/CIS_Distribution_Independent_Linux_Workstation_L1_v2.0.0.audit:1744a14649724f2777dfa14df0152b6d
+    # Description : Ensure SSH LogLevel is appropriate
+    # Reference   : https://www.tenable.com/audits/items/CIS_Distribution_Independent_Linux_Workstation_L1_v2.0.0.audit:3ecd05898c9b54268f3e9533895ec1ca
     
     if [ ${SSH_RUNNING} -eq 1 ]; then PREQS_MET="YES"; SKIPREASON=""; else PREQS_MET="NO"; SKIPREASON="SSH not installed, or not running"; fi
     Register --test-no SSH-0003 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Ensure SSH root login is disabled"

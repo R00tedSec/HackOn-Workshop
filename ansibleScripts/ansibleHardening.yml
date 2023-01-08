@@ -1,0 +1,15 @@
+
+- name: Hardening Linux
+  hosts: all
+  become: yes
+  tasks: hardeningScripts/linux.yml
+
+- name: Hardening SSH
+  hosts: all
+  become: yes
+  tasks: hardeningScripts/ssh.yml
+
+- name: Hardening Apache
+  hosts: all
+  become: yes
+  tasks: hardeningScripts/apache.yml
