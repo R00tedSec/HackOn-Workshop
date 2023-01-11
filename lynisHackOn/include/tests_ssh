@@ -40,8 +40,12 @@
     if [ ${SSH_RUNNING} -eq 1 ]; then PREQS_MET="YES"; SKIPREASON=""; else PREQS_MET="NO"; SKIPREASON="SSH not installed, or not running"; fi
     Register --test-no SSH-0001 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Ensure SSH root login is disabled"
     if [ ${SKIPTEST} -eq 0 ]; then
-        Display --indent 2 --text "- Ensure SSH root login is disabled" --result "PENDING" --color GREEN
-        
+        SSH_ROOT=$(grep "^\s*PermitRootLogin no\s*$" /etc/ssh/sshd_config)
+        if [ -z SSH_ROOT ];then
+            Display --indent 2 --text "- SSH root login enabled" --result "${STATUS_NOTPASSED}" --color RED
+        else
+            Display --indent 2 --text "- SSH root login disabled" --result "${STATUS_PASSED}" --color GREEN
+        fi
     fi
 
 #
@@ -54,7 +58,12 @@
     if [ ${SSH_RUNNING} -eq 1 ]; then PREQS_MET="YES"; SKIPREASON=""; else PREQS_MET="NO"; SKIPREASON="SSH not installed, or not running"; fi
     Register --test-no SSH-0002 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Ensure SSH AllowTcpForwarding is disabled"
     if [ ${SKIPTEST} -eq 0 ]; then
-        Display --indent 2 --text "- Ensure SSH AllowTcpForwarding is disabled" --result "PENDING" --color GREEN 
+        ALLOW_TCP=$(grep "^\s*AllowTcpForwarding no\s*$" /etc/ssh/sshd_config)
+        if [ -z $ALLOW_TCP ];then
+            Display --indent 2 --text "- AllowTcpForwarding enabled" --result "${STATUS_NOTPASSED}" --color RED
+        else
+            Display --indent 2 --text "- AllowTcpForwarding disabled" --result "${STATUS_PASSED}" --color GREEN
+        fi 
     fi
 #
 #################################################################################
@@ -64,9 +73,14 @@
     # Reference   : https://www.tenable.com/audits/items/CIS_Distribution_Independent_Linux_Workstation_L1_v2.0.0.audit:3ecd05898c9b54268f3e9533895ec1ca
     
     if [ ${SSH_RUNNING} -eq 1 ]; then PREQS_MET="YES"; SKIPREASON=""; else PREQS_MET="NO"; SKIPREASON="SSH not installed, or not running"; fi
-    Register --test-no SSH-0003 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Ensure SSH root login is disabled"
+    Register --test-no SSH-0003 --preqs-met ${PREQS_MET} --skip-reason "${SKIPREASON}" --weight L --network NO --category security --description "Ensure SSH LogLevel is appropriate"
     if [ ${SKIPTEST} -eq 0 ]; then
-        Display --indent 2 --text "- Ensure SSH root login is disabled" --result "PENDING" --color GREEN 
+        LOG_LEVEL=$(grep "^\s*LogLevel VERBOSE\s*$" /etc/ssh/sshd_config)
+        if [ -z $LOG_LEVEL ];then
+            Display --indent 2 --text "- LogLevel not set to VERBOSE" --result "${STATUS_NOTPASSED}" --color RED
+        else
+            Display --indent 2 --text "- LogLevel set to VERBOSE" --result "${STATUS_PASSED}" --color GREEN
+        fi 
     fi
 #
 #################################################################################
