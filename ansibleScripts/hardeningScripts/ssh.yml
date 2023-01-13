@@ -18,3 +18,8 @@
       state: present
       regexp: '^LogLevel'
       line: 'LogLevel VERBOSE'
+
+  - name: Apply ssh changes
+    ansible.builtin.service:
+      name: sshd
+      state: restarted
