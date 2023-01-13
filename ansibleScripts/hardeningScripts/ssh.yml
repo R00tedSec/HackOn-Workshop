@@ -6,18 +6,12 @@
       line: 'PermitRootLogin no'
   
   - name: Ensure SSH AllowTcpForwarding is disabled
-    lineinfile:
-      path: /etc/ssh/sshd_config
-      state: present
-      regexp: '^AllowTcpForwarding'
-      line: 'AllowTcpForwarding no'
+    # CODE
+
 
   - name: Ensure SSH LogLevel is appropriate
-    lineinfile:
-      path: /etc/ssh/sshd_config
-      state: present
-      regexp: '^LogLevel'
-      line: 'LogLevel VERBOSE'
+    # CODE
+
 
   - name: Apply ssh changes
     ansible.builtin.service:

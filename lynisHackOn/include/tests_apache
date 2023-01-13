@@ -56,12 +56,8 @@
 
     Register --test-no APACHE-0002 --weight L --network NO --category security --description "Checking Weak SSL Protocols Are Disabled"
     if [ ${SKIPTEST} -eq 0 ]; then
-        PROTOCOL=$(grep "^\s*SSLProtocol\s*-all\s*+TLSv1.2\s*$" /etc/apache2/mods-enabled/ssl.conf)
-        if [ ! -z "$PROTOCOL" ];then
-            Display --indent 2 --text "- Weak SSL Protocols Are Disabled" --result "${STATUS_OK}" --color GREEN
-        else 
-            Display --indent 2 --text "- Weak SSL Protocols Are Enabled" --result "${STATUS_ERROR}" --color RED
-        fi
+    # CODE
+
     fi
 #
 #################################################################################
@@ -72,12 +68,8 @@
 
     Register --test-no APACHE-0003 --weight L --network NO --category security --description "Checking KeepAliveTimeout for apache2 configuration"
     if [ ${SKIPTEST} -eq 0 ]; then
-        KEEP_ALIVE=$(grep "^\s*KeepAliveTimeout" /etc/apache2/apache2.conf  | cut -d " " -f2 )
-        if [ $KEEP_ALIVE -lt "16" ];then
-            Display --indent 2 --text "- KeepAliveTimeout is set to a value of 15 or less" --result "${STATUS_OK}" --color GREEN
-        else 
-            Display --indent 2 --text "- KeepAliveTimeout is not set to a value of 15 or less" --result "${STATUS_ERROR}" --color RED
-        fi
+    # CODE
+
     fi
 
 

@@ -35,12 +35,8 @@
 
     Register --test-no Linux-0002 --weight L --network NO --category security --description "Ensure password expiration is 365 days or less"
     if [ ${SKIPTEST} -eq 0 ]; then
-        MAX_DAYS=$(grep "^ *PASS_MAX_DAYS" /etc/login.defs | awk '{print $2}')
-        if [ $MAX_DAYS -lt "366" ];then
-            Display --indent 2 --text "- Ensure password expiration is 365 days or less" --result "${STATUS_OK}" --color GREEN
-        else
-            Display --indent 2 --text "- Ensure password expiration is 365 days or less" --result "${STATUS_ERROR}" --color RED
-        fi
+    # CODE
+
     fi
 #
 #################################################################################
@@ -49,27 +45,8 @@
     # Description : Ensure there is a firewall running and blocking all ports except 22 and 443
     Register --test-no Linux-0003 --weight L --network NO --category security --description "Ensure there is a firewall running"
     if [ ${SKIPTEST} -eq 0 ]; then
-        FIREWALL=$(ufw status)
-        if [ $? -eq 127 ];then
-            Display --indent 2 --text "- UFW not installed" --result "${STATUS_ERROR}" --color RED
-        else
-            FIREWALL_ENABLED=$(ufw status)
-            if [ "$FIREWALL_ENABLED" = "Status: inactive" ];then
-                Display --indent 2 --text "- Firewall disabled" --result "${STATUS_ERROR}" --color RED
-            else
-                FIREWALL_OPENPORTS=$(ufw status | grep ALLOW | cut -d " " -f1-2  | grep -v "v6" | cut -d "/" -f1 | uniq)
-                DISALLOWED_PORT=0
-                for i in $FIREWALL_OPENPORTS; do 
-                    if [ "$i" != "443" -a "$i" != "22" ];then
-                        Display --indent 2 --text "- Allowed $i port " --result "${STATUS_ERROR}" --color RED
-                        DISALLOWED_PORT=1
-                    fi
-                done
-                if [ $DISALLOWED_PORT -eq 0 ];then
-                    Display --indent 2 --text "- Firewall enabled and correctly configured" --result "${STATUS_OK}" --color GREEN
-                fi
-            fi
-        fi
+    # CODE
+
     fi
 #
 #################################################################################
