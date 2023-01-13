@@ -49,7 +49,7 @@
     # Description : Ensure there is a firewall running and blocking all ports except 22 and 443
     Register --test-no Linux-0003 --weight L --network NO --category security --description "Ensure there is a firewall running"
     if [ ${SKIPTEST} -eq 0 ]; then
-        FIREWALL=$(ufw)
+        FIREWALL=$(ufw status)
         if [ $? -eq 127 ];then
             Display --indent 2 --text "- UFW not installed" --result "${STATUS_ERROR}" --color RED
         else
