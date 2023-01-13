@@ -1,4 +1,3 @@
-tasks:
   - name: Ensure SSH root login is disabled
     lineinfile:
       path: /etc/ssh/sshd_config

@@ -1,4 +1,3 @@
-tasks:
   - name: Ensure the Apache Web Server Runs As a Non-Root user and group
     lineinfile:
       path: /etc/apache2/apache2.conf

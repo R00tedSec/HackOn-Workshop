@@ -1,15 +1,16 @@
-
-- name: Hardening Linux
-  hosts: all
+---
+- hosts: all
   become: yes
-  tasks: hardeningScripts/linux.yml
 
-- name: Hardening SSH
-  hosts: all
-  become: yes
-  tasks: hardeningScripts/ssh.yml
+  tasks:
+   - name: Hardening Linux
+     ansible.builtin.import_tasks:
+       file: hardeningScripts/linux.yml
 
-- name: Hardening Apache
-  hosts: all
-  become: yes
-  tasks: hardeningScripts/apache.yml
+   - name: Hardening SSH
+     ansible.builtin.import_tasks:
+       file: hardeningScripts/ssh.yml
+
+   - name: Hardening Apache
+     ansible.builtin.import_tasks:
+       file: hardeningScripts/apache.yml

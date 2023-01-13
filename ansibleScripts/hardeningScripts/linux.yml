@@ -1,4 +1,3 @@
-tasks:
   - name: Correct permissions on /etc/passwd (644)
     ansible.builtin.file:
       path: /etc/passwd
