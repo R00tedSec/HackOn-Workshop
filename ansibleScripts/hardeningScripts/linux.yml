@@ -13,10 +13,13 @@
       line: 'PASS_MAX_DAYS 365'
 
 
-  - name: Ensure the only ports opened in firewall are 22 and 443
+  - name: Reset firewall
+    community.general.ufw:
+      state: reset
+
+  - name: Start UFW
     community.general.ufw:
       state: enabled
-      policy: deny
 
   - name: Open port 22
     community.general.ufw:
