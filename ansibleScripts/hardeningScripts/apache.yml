@@ -1,0 +1,28 @@
+tasks:
+  - name: Ensure the Apache Web Server Runs As a Non-Root user and group
+    lineinfile:
+      path: /etc/apache2/apache2.conf
+      state: present
+      regexp: '^User'
+      line: 'User wwwrun'
+    lineinfile: 
+      path: /etc/apache2/apache2.conf
+      state: present
+      regexp: '^Group'
+      line: 'Group wwwrun'
+
+  - name: Ensure Weak SSL Protocols Are Disabled (SSLv2, SSLv3 and TLSv1) 
+    lineinfile:
+      path: /etc/apache2/mods-enabled/ssl.conf
+      state: present
+      regexp: '^SSLProtocol'
+      line: 'SSLProtocol -all +TLSv1.2'  
+
+
+  - name: Ensure MaxKeepAliveRequests is Set to a Value of 100 or Greater
+    lineinfile:
+      path: /etc/apache2/apache2.conf
+      state: present
+      regexp: '^KeepAliveTimeout'
+      line: 'KeepAliveTimeout 15'
+

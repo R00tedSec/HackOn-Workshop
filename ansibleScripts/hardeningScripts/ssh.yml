@@ -1,8 +1,21 @@
 tasks:
-  - name:  
+  - name: Ensure SSH root login is disabled
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      state: present
+      regexp: '^PermitRootLogin'
+      line: 'PermitRootLogin no'
+  
+  - name: Ensure SSH AllowTcpForwarding is disabled
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      state: present
+      regexp: '^AllowTcpForwarding'
+      line: 'AllowTcpForwarding no'
 
-
-  - name:  
-
-
-  - name:  
+  - name: Ensure SSH LogLevel is appropriate
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      state: present
+      regexp: '^LogLevel'
+      line: 'LogLevel VERBOSE'

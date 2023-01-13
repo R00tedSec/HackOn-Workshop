@@ -6,12 +6,12 @@ tasks:
       group: root
       mode: '0644'
 
-  - name: Correct password expiration to 365 days or less
-    ansible.builtin.replace:
+  - name: Ensure password expiration and /etc/passwd permissions
+    lineinfile:
       path: /etc/login.defs
-      after: 'PASS_MAX_DAYS'
-      regexp: '^(.+)$'
-      replace: '356 \1'
+      state: present
+      regexp: '^PASS_MAX_DAYS'
+      line: 'PASS_MAX_DAYS 365'
 
 
   - name: Ensure the only ports opened in firewall are 22 and 443
