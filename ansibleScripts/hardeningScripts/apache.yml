@@ -15,8 +15,8 @@
     lineinfile:
       path: /etc/apache2/mods-enabled/ssl.conf
       state: present
-      regexp: '^SSLProtocol'
-      line: 'SSLProtocol -all +TLSv1.2'  
+      regexp: '^\s*SSLProtocol'
+      line: '        SSLProtocol  -all +TLSv1.2'  
 
   - name: Ensure MaxKeepAliveRequests is Set to a Value of 100 or Greater
     lineinfile:
