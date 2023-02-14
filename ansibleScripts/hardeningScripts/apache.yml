@@ -18,7 +18,7 @@
       regexp: '^\s*SSLProtocol'
       line: '        SSLProtocol  -all +TLSv1.2'  
 
-  - name: Ensure MaxKeepAliveRequests is Set to a Value of 100 or Greater
+  - name: Ensure KeepAliveTimeout is Set to a Value of 15 or less
     lineinfile:
       path: /etc/apache2/apache2.conf
       state: present

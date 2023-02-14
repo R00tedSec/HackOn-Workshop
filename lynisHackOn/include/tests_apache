@@ -67,7 +67,7 @@
 #################################################################################
 #
     # Test        : APACHE-0003
-    # Description : Ensure MaxKeepAliveRequests is Set to a Value of 100 or Greater
+    # Description : Ensure KeepAliveTimeout is Set to a Value of 15 or less
     # Reference   : https://www.tenable.com/audits/items/CIS_Apache_HTTP_Server_2.4_Benchmark_v2.0.0_Level_1_Middleware.audit:a90ce8542eda0476fc0ccee6b54b5532
 
     Register --test-no APACHE-0003 --weight L --network NO --category security --description "Checking KeepAliveTimeout for apache2 configuration"
