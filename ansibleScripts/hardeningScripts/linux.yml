@@ -5,7 +5,7 @@
       group: root
       mode: '0644'
 
-  - name: Ensure password expiration and /etc/passwd permissions
+  - name: Ensure password expiration 
     lineinfile:
       path: /etc/login.defs
       state: present
