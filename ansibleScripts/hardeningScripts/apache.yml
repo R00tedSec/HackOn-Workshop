@@ -1,10 +1,10 @@
-  - name: Ensure the Apache Web Server Runs As a Non-Root user and group
+  - name: Ensure the Apache Web Server Runs As a Non-Root user
     lineinfile:
       path: /etc/apache2/apache2.conf
       state: present
       regexp: '^User'
       line: 'User www-data'
-  - name: Ensure the Apache Web Server Runs As a Non-Root user and group
+  - name: Ensure the Apache Web Server Runs As a Non-Root group
     lineinfile: 
       path: /etc/apache2/apache2.conf
       state: present
